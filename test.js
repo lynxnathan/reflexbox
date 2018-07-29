@@ -15,12 +15,14 @@ const props = {
   children: 'Hello',
   title: 'Boop',
   w: [ 1, 1/2, 1/4 ],
+  h: [ 1, 1/2, 1/4 ],
   m: 2,
   flex: true,
   px: 3
 }
 
 const cx = css(config)
+const cxl = css(config)
 
 test.afterEach(t => {
   css.reset()
@@ -71,6 +73,21 @@ test('css dedupes repeated styles', t => {
   const b = cx({ p: 2 })
   t.is(sheet.cssRules.length, 1)
   t.deepEqual(a, b)
+})
+
+test('css parses heights', t => {
+  const a = cxl({ h: 1 })
+  const b = cxl({ h: 1/2 })
+  const c = cxl({ h: 0 })
+  const d = cxl({ h: 24 })
+  const e = cxl({ h: 'auto' })
+  const rules = sheet.cssRules
+  console.log(rules)
+  t.is(rules[0].style.height, '100%')
+  t.is(rules[1].style.height, '50%')
+  t.is(rules[2].style.height, '0%')
+  t.is(rules[3].style.height, '24px')
+  t.is(rules[4].style.height, 'auto')
 })
 
 test('css parses widths', t => {

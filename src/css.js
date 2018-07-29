@@ -1,6 +1,6 @@
 import sheet from './sheet'
 
-const REG = /^([wmp][trblxy]?|flex|wrap|column|auto|align|justify|order)$/
+const REG = /^([whmp][trblxy]?|flex|wrap|column|auto|align|justify|order)$/
 const cache = {}
 
 const css = config => props => {
@@ -77,6 +77,7 @@ const rule = args => args.join(';')
 const media = (bp, body) => bp ? `@media screen and (min-width:${bp}em){${body}}` : body
 
 const width = (key, n) => dec([ 'width', !num(n) || n > 1 ? px(n) : (n * 100) + '%' ])
+const height = (key, n) => dec([ 'height', !num(n) || n > 1 ? px(n) : (n * 100) + '%' ])
 const px = n => num(n) ? n + 'px' : n
 
 const space = scale => (key, n) => {
@@ -107,6 +108,7 @@ const order = (key, n) => dec([ 'order', n ])
 
 const stylers = config => ({
   w: width,
+  h: height,
   m: space(config.space),
   p: space(config.space),
   flex,
