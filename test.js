@@ -22,7 +22,6 @@ const props = {
 }
 
 const cx = css(config)
-const cxl = css(config)
 
 test.afterEach(t => {
   css.reset()
@@ -76,11 +75,11 @@ test('css dedupes repeated styles', t => {
 })
 
 test('css parses heights', t => {
-  const a = cxl({ h: 1 })
-  const b = cxl({ h: 1/2 })
-  const c = cxl({ h: 0 })
-  const d = cxl({ h: 24 })
-  const e = cxl({ h: 'auto' })
+  const a = cx({ h: 1 })
+  const b = cx({ h: 1/2 })
+  const c = cx({ h: 0 })
+  const d = cx({ h: 24 })
+  const e = cx({ h: 'auto' })
   const rules = sheet.cssRules
   console.log(rules)
   t.is(rules[0].style.height, '100%')
